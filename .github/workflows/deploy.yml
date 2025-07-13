@@ -1,6 +1,9 @@
 name: Deploy to Staging Environments
 
 on:
+  push:
+    branches:
+      - main
   workflow_run:
     workflows:
       - Lint and Format Check
