@@ -1,0 +1,21 @@
+name: Deploy to Staging Environments
+
+on:
+  workflow_run:
+    workflows:
+      - Lint and Format Check
+      - Run Tests
+    types:
+      - completed
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - run: npm ci
+      - run: echo "✅ Deploying to STAGING..."
